@@ -8,8 +8,8 @@ ROOT=Path(__file__).resolve().parent; sys.path.insert(0,str(ROOT))
 from src.model import DEFAULTS, FEATURES, TARGET, generate_synthetic_dataset, train_and_evaluate, predict_depth
 from src.lifetime import estimate_lifetime
 from src.reports import excel_report, pdf_report
-st.set_page_config(page_title="AI cacbonat hóa xỉ lò cao",page_icon="🧱",layout="wide")
-st.title("🧱 AI dự đoán cacbonat hóa bê tông dùng xỉ lò cao")
+st.set_page_config(page_title="Phần mềm dự đoán tuổi thọ công trình BTCT trên cơ sở độ bền chống Carbonate hóa của Bê tông sử dụng xỉ lò cao",page_icon="🧱",layout="wide")
+st.title("🧱 Phần mềm dự đoán tuổi thọ công trình BTCT trên cơ sở độ bền chống Carbonate hóa của Bê tông sử dụng xỉ lò cao")
 st.caption("Công cụ nghiên cứu minh họa; không thay thế thiết kế hoặc đánh giá an toàn kết cấu.")
 with st.sidebar:
     st.header("Nguồn dữ liệu")

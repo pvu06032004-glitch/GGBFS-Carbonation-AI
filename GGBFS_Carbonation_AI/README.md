@@ -1,6 +1,6 @@
-# AI dự đoán cacbonat hóa bê tông dùng xỉ lò cao
+# Phần mềm dự đoán tuổi thọ công trình BTCT trên cơ sở độ bền chống Carbonate hóa của Bê tông sử dụng xỉ lò cao
 
-Ứng dụng Streamlit nghiên cứu/minh họa dự đoán chiều sâu cacbonat hóa bê tông dùng xỉ lò cao, so sánh kịch bản, ước tính thời điểm mặt cacbonat hóa đạt lớp bảo vệ, xuất Excel/PDF.
+Ứng dụng Streamlit nghiên cứu/minh họa dự đoán tuổi thọ công trình bê tông cốt thép (BTCT) trên cơ sở độ bền chống carbonate hóa của bê tông sử dụng xỉ lò cao, so sánh kịch bản, ước tính thời điểm mặt carbonate hóa đạt lớp bảo vệ, xuất Excel/PDF.
 
 ## Cảnh báo khoa học quan trọng
 Dữ liệu mặc định được sinh bằng công thức lập trình và đánh dấu `SYNTHETIC_DEMO`; đây **không phải dữ liệu thí nghiệm**. Các chỉ số R²/MAE/RMSE trên dữ liệu này không thể được báo cáo như độ chính xác của mô hình trên bê tông thực. Ước tính tuổi thọ dùng quan hệ đơn giản x=K√t, giả định điều kiện phơi nhiễm không đổi; không mô hình hóa đầy đủ khởi phát/lan truyền ăn mòn và không dùng cho thiết kế, nghiệm thu hoặc đánh giá an toàn kết cấu.
