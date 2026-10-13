@@ -1,6 +1,6 @@
-# GGBFS Carbonation AI
+# AI dự đoán cacbonat hóa bê tông dùng xỉ lò cao
 
-Ứng dụng Streamlit nghiên cứu/minh họa dự đoán chiều sâu cacbonat hóa bê tông GGBFS, so sánh kịch bản, ước tính thời điểm mặt cacbonat hóa đạt lớp bảo vệ, xuất Excel/PDF.
+Ứng dụng Streamlit nghiên cứu/minh họa dự đoán chiều sâu cacbonat hóa bê tông dùng xỉ lò cao, so sánh kịch bản, ước tính thời điểm mặt cacbonat hóa đạt lớp bảo vệ, xuất Excel/PDF.
 
 ## Cảnh báo khoa học quan trọng
 Dữ liệu mặc định được sinh bằng công thức lập trình và đánh dấu `SYNTHETIC_DEMO`; đây **không phải dữ liệu thí nghiệm**. Các chỉ số R²/MAE/RMSE trên dữ liệu này không thể được báo cáo như độ chính xác của mô hình trên bê tông thực. Ước tính tuổi thọ dùng quan hệ đơn giản x=K√t, giả định điều kiện phơi nhiễm không đổi; không mô hình hóa đầy đủ khởi phát/lan truyền ăn mòn và không dùng cho thiết kế, nghiệm thu hoặc đánh giá an toàn kết cấu.
@@ -25,9 +25,9 @@ streamlit run app.py
 ```
 
 ## Định dạng dữ liệu CSV thực nghiệm
-CSV phải có các cột: `W_B, Cement_kg_m3, GGBFS_pct, FA_pct, SF_pct, fc_28_MPa, Curing_days, Curing_type, CO2_pct, RH_pct, Temperature_C, Exposure_days, Exposure_condition, CO2_type, Carbonation_depth_mm`.
+CSV phải có các cột: `W_B, Cement_kg_m3, GGBFS_pct, FA_pct, SF_pct, fc_28_MPa, Curing_days, Curing_type, CO2_pct, RH_pct, Temperature_C, Exposure_days, Exposure_condition, CO2_type, Carbonation_depth_mm`. Tên cột `GGBFS_pct` được giữ để tương thích với định dạng dữ liệu và mô hình hiện tại; cột này biểu thị tỷ lệ xỉ lò cao (%).
 - W_B: tỷ lệ nước/chất kết dính (vd 0.45).
-- GGBFS_pct, FA_pct, SF_pct: phần trăm chất kết dính.
+- GGBFS_pct (tỷ lệ xỉ lò cao), FA_pct (tro bay), SF_pct (silica fume): phần trăm chất kết dính.
 - CO2_pct: phần trăm CO₂ (0.04 nghĩa là 0.04%).
 - RH_pct: độ ẩm tương đối (%); Exposure_days: ngày; Carbonation_depth_mm: chiều sâu đo (mm).
 - Curing_type: Water/Sealed/Air; Exposure_condition và CO2_type: Natural/Accelerated.

@@ -18,7 +18,7 @@ def excel_report(inputs, prediction, lifetime, curve):
 
 def pdf_report(inputs, prediction, lifetime, curve, data_status):
     b=BytesIO(); doc=SimpleDocTemplate(b,pagesize=A4,leftMargin=18*mm,rightMargin=18*mm,topMargin=16*mm,bottomMargin=16*mm); s=getSampleStyleSheet()
-    story=[Paragraph("BÁO CÁO CACBONAT HÓA BÊ TÔNG GGBFS",s["Title"]),Spacer(1,4*mm),Paragraph("Trạng thái dữ liệu: "+data_status,s["BodyText"]),Spacer(1,4*mm),Paragraph("Thông số đầu vào",s["Heading2"])]
+    story=[Paragraph("BÁO CÁO CACBONAT HÓA BÊ TÔNG DÙNG XỈ LÒ CAO",s["Title"]),Spacer(1,4*mm),Paragraph("Trạng thái dữ liệu: "+data_status,s["BodyText"]),Spacer(1,4*mm),Paragraph("Thông số đầu vào",s["Heading2"])]
     t=Table([["Thông số","Giá trị"]]+[[str(k),str(v)] for k,v in inputs.items()],colWidths=[75*mm,85*mm],repeatRows=1)
     t.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.HexColor("#16324F")),("TEXTCOLOR",(0,0),(-1,0),colors.white),("GRID",(0,0),(-1,-1),.4,colors.grey),("FONTSIZE",(0,0),(-1,-1),8)])); story += [t,Spacer(1,4*mm),Paragraph("Kết quả",s["Heading2"])]
     rt=Table([["Chỉ tiêu","Giá trị"],["Chiều sâu dự đoán (mm)",f"{prediction:.3f}"],["K (mm/√năm)",f"{lifetime['k_mm_sqrt_year']:.3f}"],["Thời điểm chạm lớp bảo vệ (năm)",f"{lifetime['t_init_years']:.2f}"],["Tổng thời gian gồm lan truyền (năm)",f"{lifetime['t_total_years']:.2f}"]],colWidths=[100*mm,60*mm])

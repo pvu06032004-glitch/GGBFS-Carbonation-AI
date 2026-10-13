@@ -8,8 +8,8 @@ ROOT=Path(__file__).resolve().parent; sys.path.insert(0,str(ROOT))
 from src.model import DEFAULTS, FEATURES, TARGET, generate_synthetic_dataset, train_and_evaluate, predict_depth
 from src.lifetime import estimate_lifetime
 from src.reports import excel_report, pdf_report
-st.set_page_config(page_title="GGBFS Carbonation AI",page_icon="🧱",layout="wide")
-st.title("🧱 AI dự đoán cacbonat hóa bê tông GGBFS")
+st.set_page_config(page_title="AI cacbonat hóa xỉ lò cao",page_icon="🧱",layout="wide")
+st.title("🧱 AI dự đoán cacbonat hóa bê tông dùng xỉ lò cao")
 st.caption("Công cụ nghiên cứu minh họa; không thay thế thiết kế hoặc đánh giá an toàn kết cấu.")
 with st.sidebar:
     st.header("Nguồn dữ liệu")
@@ -31,7 +31,7 @@ with t1:
     with st.form("predict"):
         a,b,c=st.columns(3)
         with a:
-            wb=st.number_input("W/B",.2,.9,.45,.01); cement=st.number_input("Xi măng (kg/m³)",100.,600.,320.,5.); slag=st.slider("GGBFS (%)",0,70,40); fa=st.slider("Tro bay FA (%)",0,50,0); sf=st.slider("Silica fume SF (%)",0,15,0)
+            wb=st.number_input("W/B",.2,.9,.45,.01); cement=st.number_input("Xi măng (kg/m³)",100.,600.,320.,5.); slag=st.slider("Xỉ lò cao (%)",0,70,40); fa=st.slider("Tro bay FA (%)",0,50,0); sf=st.slider("Silica fume SF (%)",0,15,0)
         with b:
             fc=st.number_input("Cường độ nén 28 ngày (MPa)",10.,100.,40.); curing_days=st.selectbox("Dưỡng hộ (ngày)",[3,7,14,28,56],index=1); curing=st.selectbox("Loại dưỡng hộ",["Water","Sealed","Air"]); rh=st.slider("RH (%)",30,100,65); temp=st.slider("Nhiệt độ (°C)",0,60,25)
         with c:
@@ -49,17 +49,17 @@ with t1:
         curve=pd.DataFrame({"Years":np.linspace(0,max(1,r["years"]*1.5),30)}); curve["Predicted_depth_mm"]=life["k_mm_sqrt_year"]*np.sqrt(curve["Years"])
         fig,ax=plt.subplots(figsize=(9,4)); ax.plot(curve.Years,curve.Predicted_depth_mm,label="x = K√t"); ax.axhline(r["cover"],linestyle="--",label="Lớp bảo vệ"); ax.set_xlabel("Năm"); ax.set_ylabel("Chiều sâu (mm)"); ax.grid(alpha=.25); ax.legend(); st.pyplot(fig); plt.close(fig)
         status="DỮ LIỆU MÔ PHỎNG — minh họa" if bundle["data_source"]=="SYNTHETIC_DEMO" else "Dữ liệu người dùng tải lên — chưa xác minh độc lập"
-        st.download_button("Tải Excel",excel_report(r["inputs"],pred,life,curve),"bao_cao_GGBFS.xlsx","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        st.download_button("Tải PDF",pdf_report(r["inputs"],pred,life,curve,status),"bao_cao_GGBFS.pdf","application/pdf")
+        st.download_button("Tải Excel",excel_report(r["inputs"],pred,life,curve),"bao_cao_xi_lo_cao.xlsx","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        st.download_button("Tải PDF",pdf_report(r["inputs"],pred,life,curve,status),"bao_cao_xi_lo_cao.pdf","application/pdf")
 with t2:
-    st.subheader("So sánh tỷ lệ GGBFS")
+    st.subheader("So sánh tỷ lệ xỉ lò cao")
     w=st.slider("W/B",.25,.70,.45,.01,key="swb"); rh2=st.slider("RH (%)",40,95,65,key="srh"); co22=st.number_input("CO₂ (%)",.01,5.,.04,.01,key="sco2"); cover2=st.slider("Lớp bảo vệ (mm)",15,70,30,key="scov")
     rows=[]
     for slag2 in [0,20,40,60,70]:
         inp={**DEFAULTS,"W_B":w,"GGBFS_pct":slag2,"RH_pct":rh2,"CO2_pct":co22,"Exposure_days":10*365.25}
         d=float(predict_depth(bundle,inp)[0]); l=estimate_lifetime(max(d,.001),inp["Exposure_days"],cover2)
-        rows.append({"GGBFS (%)":slag2,"Chiều sâu sau 10 năm (mm)":d,"Thời điểm chạm lớp bảo vệ (năm)":l["t_init_years"]})
-    df=pd.DataFrame(rows); st.dataframe(df,use_container_width=True,hide_index=True); fig,ax=plt.subplots(); ax.plot(df["GGBFS (%)"],df["Chiều sâu sau 10 năm (mm)"],marker="o"); ax.set_xlabel("GGBFS (%)"); ax.set_ylabel("Chiều sâu (mm)"); ax.grid(alpha=.3); st.pyplot(fig); plt.close(fig)
+        rows.append({"Xỉ lò cao (%)":slag2,"Chiều sâu sau 10 năm (mm)":d,"Thời điểm chạm lớp bảo vệ (năm)":l["t_init_years"]})
+    df=pd.DataFrame(rows); st.dataframe(df,use_container_width=True,hide_index=True); fig,ax=plt.subplots(); ax.plot(df["Xỉ lò cao (%)"],df["Chiều sâu sau 10 năm (mm)"],marker="o"); ax.set_xlabel("Xỉ lò cao (%)"); ax.set_ylabel("Chiều sâu (mm)"); ax.grid(alpha=.3); st.pyplot(fig); plt.close(fig)
     st.caption("So sánh kịch bản của mô hình hiện tại; không chứng minh quan hệ nhân quả.")
 with t3:
     m=bundle["metrics"]; a,b,c=st.columns(3); a.metric("R²",f"{m['R2']:.3f}"); b.metric("MAE (mm)",f"{m['MAE_mm']:.2f}"); c.metric("RMSE (mm)",f"{m['RMSE_mm']:.2f}"); st.write(f"Train: {m['n_train']} hàng; test: {m['n_test']} hàng.")
